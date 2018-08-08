@@ -141,5 +141,4 @@ angular.module('myApp', [
          otherwise({
            redirectTo: '/convert'
          });
-       $httpProvider.useLegacyPromiseExtensions(false);
      }]);
