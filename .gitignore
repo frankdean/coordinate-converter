@@ -9,3 +9,4 @@ npm-debug.log
 /README.html
 app/third_party/
 /dist/*
+/app/node_modules
