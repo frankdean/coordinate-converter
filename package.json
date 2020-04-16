@@ -23,7 +23,6 @@
     "copyfiles": "^2.1.1",
     "cssmin": "^0.4.3",
     "firefox-profile": "^1.0.0",
-    "http-server": "^0.12.1",
     "jasmine-core": "^2.8.0",
     "jshint": "^2.9.1",
     "karma": "^4.2.0",
@@ -37,6 +36,7 @@
     "protractor": "^5.3.0",
     "q": "^1.4.1",
     "rimraf": "^2.5.1",
+    "serve": "^11.3.0",
     "shelljs": "^0.8.2",
     "uglify-js": "^3.5.0"
   },
@@ -62,7 +62,7 @@
   "scripts": {
     "postinstall": "node -e \"try { require('fs').symlinkSync(require('path').relative('app', 'node_modules'), 'app/node_modules', 'junction') } catch (e) { }\"",
     "prestart": "yarn install",
-    "start": "http-server -a localhost -p 8000 -c-1",
+    "start": "serve -l 8000 app",
     "pretest": "yarn install",
     "test": "karma start test/karma.conf.js",
     "test-single-run": "karma start test/karma.conf.js  --single-run",
