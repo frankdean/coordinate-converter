@@ -40,6 +40,8 @@ exports.config = {
     'e2e/*.js'
   ],
 
+  SELENIUM_PROMISE_MANAGER: true,
+
   getMultiCapabilities: exports.getBrowserProfiles,
 
   maxSessions: 1,
@@ -58,7 +60,6 @@ exports.config = {
       browser.privateConfig.tmpDir = env.tmpDir;
       browser.privateConfig.browserName = caps.get('browserName');
     });
-    browser.privateConfig.baseUrl = env.baseUrl;
     browser.privateConfig.baseUrl = env.baseUrl;
   }
 

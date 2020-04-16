@@ -16,23 +16,25 @@
     "coordinate",
     "converter"
   ],
+  "resolutions": {
+    "minimist": "^1.2.3"
+  },
   "devDependencies": {
     "copyfiles": "^2.1.1",
     "cssmin": "^0.4.3",
-    "ecstatic": "~>3.3.2",
     "firefox-profile": "^1.0.0",
-    "http-server": "^0.11.1",
-    "jasmine-core": "^3.1.0",
+    "http-server": "^0.12.1",
+    "jasmine-core": "^2.8.0",
     "jshint": "^2.9.1",
     "karma": "^4.2.0",
     "karma-chrome-launcher": "^2.2.0",
     "karma-firefox-launcher": "^1.1.0",
     "karma-jasmine": "^1.1.2",
-    "karma-junit-reporter": "^1.2.0",
+    "karma-junit-reporter": "^2.0.1",
     "karma-safari-launcher": "^1.0.0",
     "lodash": "lodash/lodash#~>4.17.14",
-    "mkdirp": "^0.5.1",
-    "protractor": "^5.4.2",
+    "mkdirp": "^1.0.4",
+    "protractor": "^5.3.0",
     "q": "^1.4.1",
     "rimraf": "^2.5.1",
     "shelljs": "^0.8.2",
@@ -49,9 +51,9 @@
     "angular-route": "^1.7.9",
     "angular-ui-bootstrap": "^2.2.0",
     "bootstrap": "^3.4.0",
-    "html5-boilerplate": "^6.0.1",
+    "html5-boilerplate": "^7.3.0",
     "jquery": "^3.3.1",
-    "open-location-code": "google/open-location-code#^1.0.3",
+    "open-location-code": "google/open-location-code#^1.0.4",
     "proj4": "^2.4.4"
   },
   "engines": {
