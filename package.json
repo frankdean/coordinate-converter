@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "1.0.3",
+  "version": "1.0.4-rc.1",
   "description": "Geographical Coordinate Converter",
   "author": {
     "name": "Frank Dean",
@@ -17,12 +17,13 @@
     "converter"
   ],
   "resolutions": {
+    "lodash": "^4.17.19",
     "minimist": "^1.2.3"
   },
   "devDependencies": {
     "copyfiles": "^2.1.1",
     "cssmin": "^0.4.3",
-    "firefox-profile": "^1.0.0",
+    "firefox-profile": "^2.0.0",
     "jasmine-core": "^2.8.0",
     "jshint": "^2.9.1",
     "karma": "^5.1.0",
