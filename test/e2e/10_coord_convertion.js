@@ -17,10 +17,19 @@
  */
 'use strict';
 
+var helper = {
+  wait: function wait(time = 400) {
+    if (browser.privateConfig.browserName.toLowerCase() == 'safari') {
+      browser.sleep(time);
+    }
+  }
+};
+
 describe('Coordinate convertion', function() {
 
   beforeEach(function() {
     browser.get('index.html#/convert');
+    helper.wait();
   });
 
   it('should show the whereami button', function() {
@@ -37,6 +46,7 @@ describe('Coordinate convertion', function() {
 
   it('should show the converted location once valid text has been entered', function() {
     element(by.id('input-position')).sendKeys(1,-3);
+    helper.wait();
     expect(element(by.id('div-output-location')).isDisplayed()).toBeTruthy();
     expect(element(by.id('div-ext-links')).isDisplayed()).toBeTruthy();
   });

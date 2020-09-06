@@ -23,7 +23,6 @@
   "devDependencies": {
     "copyfiles": "^2.1.1",
     "cssmin": "^0.4.3",
-    "firefox-profile": "^2.0.0",
     "jasmine-core": "^2.8.0",
     "jshint": "^2.9.1",
     "karma": "^5.1.0",
