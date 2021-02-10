@@ -17,13 +17,7 @@
  */
 'use strict';
 
-var helper = {
-  wait: function wait(time = 400) {
-    if (browser.privateConfig.browserName.toLowerCase() == 'safari') {
-      browser.sleep(time);
-    }
-  }
-};
+var helper = require('../helper.js');
 
 describe('Coordinate convertion', function() {
 
