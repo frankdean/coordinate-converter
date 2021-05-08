@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Geographical Coordinate Converter",
   "author": {
     "name": "Frank Dean",
@@ -17,9 +17,6 @@
     "converter"
   ],
   "resolutions": {
-    "ini": "~1.3.6",
-    "lodash": "^4.17.19",
-    "minimist": "^1.2.3"
   },
   "devDependencies": {
     "copyfiles": "^2.1.1",
@@ -68,7 +65,7 @@
     "test-single-run": "karma start test/karma.conf.js  --single-run",
     "preupdate-webdriver": "yarn install",
     "update-webdriver": "webdriver-manager update",
-    "_preprotractor": "yarn run update-webdriver",
+    "preprotractor": "yarn run update-webdriver",
     "protractor": "protractor test/protractor.conf.js",
     "dist-update-index-async": "node -e \"require('shelljs/global'); sed('-i', /    \\/\\/ You need to run .yarn run update-index-async. to inject the angular async code here/, sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=node_modules/angular-loader/angular-loader.min.js.map','app/node_modules/angular-loader/angular-loader.min.js'), 'dist/app/index-async.html');\"",
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /    \\/\\/ You need to run .yarn run update-index-async. to inject the angular async code here/, sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=node_modules/angular-loader/angular-loader.min.js.map','app/node_modules/angular-loader/angular-loader.min.js'), 'app/index-async.html');\"",
