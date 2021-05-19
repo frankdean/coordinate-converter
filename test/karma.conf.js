@@ -31,7 +31,7 @@ module.exports = function(config){
     _browsers : ['Chrome', 'Firefox'],
     _browsers : ['Safari'],
     _browsers : ['Chrome', 'Firefox', 'Safari'],
-    browsers : ['Chrome'],
+    browsers : ['ChromeHeadless'],
 
     logLevel: config.LOG_INFO,
 
