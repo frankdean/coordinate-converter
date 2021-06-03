@@ -1,7 +1,40 @@
-FROM nginx:alpine
+# -*- mode: dockerfile; -*- vim: set ft=dockerfile:
+FROM node:12.22.1-buster-slim
+LABEL uk.co.fdsd.convert-coord.version="1.0.6"
 
-#WORKDIR /usr/share/nginx/html
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git \
+    vim
 
-COPY app /usr/share/nginx/html
+RUN apt-get install -y --no-install-recommends \
+    locales \
+    chromium chromium-l10n \
+    firefox-esr-l10n-en-gb
 
-COPY node_modules /usr/share/nginx/html/node_modules
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199#23
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get install -y --no-install-recommends \
+    openjdk-11-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+#    chromium-sandbox \
+
+RUN sed -i -e 's/# en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen \
+    && localedef -i en_GB -c -f UTF-8 -A /usr/share/locale/locale.alias en_GB.UTF-8 \
+    && update-locale LANG=en_GB.UTF-8 LANGUAGE
+
+COPY --chown=node:node . /webapp
+
+USER node
+
+WORKDIR /webapp
+
+RUN yarn
+
+RUN yarn update-webdriver
+
+ENTRYPOINT ["yarn", "start"]

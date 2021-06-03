@@ -28,10 +28,23 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    _browsers : ['Chrome', 'Firefox'],
+    _browsers : ['Chrome'],
+    _browsers : ['Firefox'],
+    _browsers : ['FirefoxHeadless'],
     _browsers : ['Safari'],
-    _browsers : ['Chrome', 'Firefox', 'Safari'],
-    browsers : ['ChromeHeadless'],
+    browsers : ['ChromeNoSandbox', 'FirefoxHeadless'],
+    _browsers: ['ChromeNoSandbox'],
+
+    customLaunchers: {
+      ChromeNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      },
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: ['--headless']
+      }
+    },
 
     logLevel: config.LOG_INFO,
 

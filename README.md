@@ -15,3 +15,42 @@ It parses free text input, converting to and from the following formats:
 
 [olc]: https://en.wikipedia.org/wiki/Open_Location_Code
 [trip-web-client]: https://github.com/frankdean/trip-web-client
+
+## Docker
+
+It is possible to develop the application using a Docker container, by
+working in the directory containing the current source code, and
+peforming a bind mount of the source folder with the `/webapp` folder
+in the container.
+
+**Note:** the container will already have a copy of the source code in
+the `/webapp` folder.  The bind mount will bind over that folder,
+hiding its contents with the current source directory on the host
+machine.
+
+To build a new container:
+
+	$ docker build -t convert-coord .
+
+To run the container, and mount the current directory at `/webapp`:
+
+	$ cd convert-coord-client
+	$ docker run --name convert-coord -e CHROME_BIN=/usr/bin/chromium \
+	--mount type=bind,source="$(pwd)",target=/webapp \
+	--shm-size=128m --publish 8000:8000 -d convert-coord
+
+To start and connect to a Bash shell in the running container:
+
+	$ docker exec -it convert-coord bash -il
+
+Then, in the container, run the tests:
+
+	$ cd /webapp
+	$ yarn
+	$ yarn run lint
+	$ yarn run test-single-run
+	$ yarn run protractor
+
+Alternatively, run the test directly from the host:
+
+	$ docker exec -it -w /webapp convert-coord yarn run test-single-run
