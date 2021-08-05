@@ -65,7 +65,7 @@ exports.config = {
 
     return [
       // safariConfig,
-      firefoxConfig,
+      // firefoxConfig,
       chromeDockerConfig
     ];
   },

@@ -3,5 +3,4 @@
 .git
 .github
 app/node_modules
-node_modules
 docker*.sh

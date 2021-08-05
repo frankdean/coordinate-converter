@@ -18,10 +18,23 @@ It parses free text input, converting to and from the following formats:
 
 ## Docker
 
-It is possible to develop the application using a Docker container, by
-working in the directory containing the current source code, and
-peforming a bind mount of the source folder with the `/webapp` folder
-in the container.
+The application can be run in Docker as follows:
+
+	$ docker run --name convert-coord --publish 8000:80 \
+	-d fdean/convert-coord:latest
+
+Stop the container with:
+
+	$ docker container stop convert-coord
+
+Start the container with:
+
+	$ docker container rm convert-coord
+
+It is also possible to develop the application using a Docker
+container, by working in the directory containing the current source
+code, and peforming a bind mount of the source folder with the
+`/webapp` folder in the container.
 
 **Note:** the container will already have a copy of the source code in
 the `/webapp` folder.  The bind mount will bind over that folder,
@@ -30,18 +43,17 @@ machine.
 
 To build a new container:
 
-	$ docker build -t convert-coord .
+	$ docker build  -f Dockerfile-dev -t convert-coord-dev docker .
 
 To run the container, and mount the current directory at `/webapp`:
 
-	$ cd convert-coord-client
-	$ docker run --name convert-coord -e CHROME_BIN=/usr/bin/chromium \
+	$ docker run --name convert-coord-dev -e CHROME_BIN=/usr/bin/chromium \
 	--mount type=bind,source="$(pwd)",target=/webapp \
 	--shm-size=128m --publish 8000:8000 -d convert-coord
 
 To start and connect to a Bash shell in the running container:
 
-	$ docker exec -it convert-coord bash -il
+	$ docker exec -it convert-coord-dev bash -il
 
 Then, in the container, run the tests:
 
@@ -53,4 +65,4 @@ Then, in the container, run the tests:
 
 Alternatively, run the test directly from the host:
 
-	$ docker exec -it -w /webapp convert-coord yarn run test-single-run
+	$ docker exec -it -w /webapp convert-coord-dev yarn run test-single-run
