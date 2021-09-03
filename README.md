@@ -43,13 +43,13 @@ machine.
 
 To build a new container:
 
-	$ docker build  -f Dockerfile-dev -t convert-coord-dev docker .
+	$ docker build  -f Dockerfile-dev -t convert-coord-dev .
 
 To run the container, and mount the current directory at `/webapp`:
 
 	$ docker run --name convert-coord-dev -e CHROME_BIN=/usr/bin/chromium \
 	--mount type=bind,source="$(pwd)",target=/webapp \
-	--shm-size=128m --publish 8000:8000 -d convert-coord
+	--shm-size=128m --publish 8000:8000 -d convert-coord-dev
 
 To start and connect to a Bash shell in the running container:
 
