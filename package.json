@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Geographical Coordinate Converter",
   "author": {
     "name": "Frank Dean",
@@ -17,7 +17,7 @@
     "converter"
   ],
   "resolutions": {
-    "jszip": ">=3.7.0"
+    "ansi-regex": "^5.0.1"
   },
   "devDependencies": {
     "adm-zip": "^0.5.5",
