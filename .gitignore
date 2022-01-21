@@ -10,3 +10,5 @@ npm-debug.log
 app/third_party/
 /dist/*
 /app/node_modules
+/.vagrant/
+/provisioning/downloads/
