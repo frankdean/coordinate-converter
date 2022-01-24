@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Geographical Coordinate Converter",
   "author": {
     "name": "Frank Dean",
@@ -23,7 +23,7 @@
     "cssmin": "^0.4.3",
     "eslint": "^8.7.0",
     "jasmine-core": "^3.6.0",
-    "karma": "6.3.4",
+    "karma": "6.3.11",
     "karma-chrome-launcher": "^3.1.0",
     "karma-firefox-launcher": "^2.1.0",
     "karma-jasmine": "^4.0.1",
@@ -86,11 +86,12 @@
     "build": "$npm_execpath run build:scripts && $npm_execpath run build:css",
     "build:scripts": "cd dist/app && ../../node_modules/uglify-js/bin/uglifyjs ../../app/js/*.js ../../app/js/**/*.js --compress --mangle --source-map \"filename=coord.min.js.map\" --output coord.min.js",
     "build:css": "cssmin app/css/app.css > dist/app/css/app.css && cssmin app/css/ie10-viewport-bug-workaround.css > dist/app/css/ie10-viewport-bug-workaround.css",
+    "pre-dist": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist/app/LICENSES', stdout); } \"",
     "dist": "copyfiles 'app/node_modules/**/*.min.js' 'app/node_modules/**/*.min.js.map' 'app/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js' 'app/node_modules/angular-i18n/angular-locale_en-gb.js' 'app/node_modules/proj4/dist/*.js' 'app/node_modules/**/*.css' 'app/node_modules/**/*.css.map' 'app/css/*.min.css' 'app/index*.html' 'app/partials/*.html' 'LICENSE.txt' dist; cp 'LICENSE' dist/app/LICENSE.txt",
     "dist-misc": "node -e \"require('shelljs').cp('LICENSE', 'dist/app/LICENSE.txt')\"",
     "post-dist": "node -e \"const shell = require('shelljs'); shell.rm('-f', 'dist/app/index-dev.html')\"",
     "tar-release": "node -e \"require('shelljs').cd('dist'); require('tar').c({gzip: true, sync: true, file: '${npm_package_name}-release-v${npm_package_version}.tgz'},['app'])\"",
     "zip-release": "node -e \"require('shelljs').cd('dist');const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('app','app');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip');\"",
-    "build-release": "$npm_execpath run disable-debug && $npm_execpath run disable-debug-logging && $npm_execpath run clean && $npm_execpath run build && $npm_execpath run dist && $npm_execpath run update-index-prod && $npm_execpath run post-dist && $npm_execpath run tar-release && $npm_execpath run zip-release && $npm_execpath run enable-debug && $npm_execpath run enable-debug-logging"
+    "build-release": "$npm_execpath run disable-debug && $npm_execpath run disable-debug-logging && $npm_execpath run clean && $npm_execpath run build && $npm_execpath run pre-dist && $npm_execpath run dist && $npm_execpath run update-index-prod && $npm_execpath run post-dist && $npm_execpath run tar-release && $npm_execpath run zip-release && $npm_execpath run enable-debug && $npm_execpath run enable-debug-logging"
   }
 }
