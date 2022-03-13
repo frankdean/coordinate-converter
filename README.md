@@ -1,6 +1,6 @@
 # Geographical Coordinate Converter
 
-This is a JavaScript based application using the AngulerJS web application
+This is a JavaScript based application using the AngularJS web application
 framework.
 
 It parses free text input, converting to and from the following formats:

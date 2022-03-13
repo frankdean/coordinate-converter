@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   # Bento are one of the Vagrant recommended boxes see
   # https://www.vagrantup.com/docs/boxes.html#official-boxes
   # https://app.vagrantup.com/bento
-  config.vm.box = "bento/debian-10"
+  config.vm.box = "bento/debian-11"
 
   # Set :DEV to 'y' (lower-case) to setup and run the VM as a
   # development environment.  If the VM already exists, run or reload

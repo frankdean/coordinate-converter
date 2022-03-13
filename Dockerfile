@@ -1,5 +1,13 @@
 # -*- mode: dockerfile; -*- vim: set ft=dockerfile:
+FROM node:12.22.9-buster-slim AS build
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app-server
+COPY app package.json yarn.lock ./
+RUN yarn
 FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
-COPY app .
-COPY node_modules ./node_modules
+COPY --from=build /app-server ./
