@@ -1,6 +1,6 @@
 # -*- mode: dockerfile; -*- vim: set ft=dockerfile:
-FROM node:12.22.6-buster-slim
-LABEL uk.co.fdsd.convert-coord.version="1.0.7"
+FROM node:14-bullseye-slim
+#LABEL uk.co.fdsd.convert-coord.version="1.0.9"
 
 RUN apt-get update \
     && apt-get upgrade -y \

@@ -1,5 +1,5 @@
 # -*- mode: dockerfile; -*- vim: set ft=dockerfile:
-FROM node:12.22.9-buster-slim AS build
+FROM node:14-bullseye-slim AS build
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     ca-certificates \
