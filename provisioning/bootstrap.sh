@@ -6,7 +6,7 @@
 export DEBIAN_FRONTEND=noninteractive
 DEB_OPTIONS="--yes"
 apt-get update
-apt-get upgrade $DEB_OPTIONS
+apt-get full-upgrade $DEB_OPTIONS
 
 sed -i -e 's/# en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
@@ -33,8 +33,8 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 apt-get update
 apt-get install $DEB_OPTIONS yarn+ cmdtest- nodejs-
 
-NODE_VERSION="v14.19.0"
-NODE_SHA256=daac84812f9815c5040561cb3a4c73ced26a490019d503432c7da17847389c55
+NODE_VERSION="v14.19.1"
+NODE_SHA256=2a28ee68c58e2c3a2a4deecdf9ee1d7080afd69ebe211cf5141d45df8f4ecc77
 NODE_FILENAME="node-${NODE_VERSION}-linux-x64"
 NODE_TAR_FILENAME="${NODE_FILENAME}.tar.xz"
 NODE_EXTRACT_DIR="${NODE_FILENAME}"
@@ -65,25 +65,25 @@ if [ ! -d "/usr/local/share/${NODE_FILENAME}" ]; then
 		if [ -L /usr/local/share/node-current ]; then
 		    rm -f /usr/local/share/node-current
 		fi
-		ln -s "$NODE_EXTRACT_DIR" node-current
+		ln -fs "$NODE_EXTRACT_DIR" node-current
 		cd  /usr/local/bin
-		ln -s ../share/node-current/bin/node
-		ln -s ../share/node-current/bin/npm
-		ln -s ../share/node-current/bin/npx
+		ln -fs ../share/node-current/bin/node
+		ln -fs ../share/node-current/bin/npm
+		ln -fs ../share/node-current/bin/npx
 		cd /usr/local/include
-		ln -s ../share/node-current/include/node/
+		ln -fs ../share/node-current/include/node/
 		cd /usr/local/lib
-		ln -s ../share/node-current/lib/node_modules/
+		ln -fs ../share/node-current/lib/node_modules/
 		mkdir -p /usr/local/share/doc
 		cd /usr/local/share/doc
-		ln -s ../node-current/share/doc/node/
+		ln -fs ../node-current/share/doc/node/
 		mkdir -p /usr/local/share/man/man1/
 		cd /usr/local/share/man/man1/
-		ln -s ../../node-current/share/man/man1/node.1
+		ln -fs ../../node-current/share/man/man1/node.1
 		cd /usr/local/share/
 		mkdir -p systemtap/tapset
 		cd systemtap/tapset
-		ln -s ../../node-current/share/systemtap/tapset/node.stp
+		ln -fs ../../node-current/share/systemtap/tapset/node.stp
 	fi
 	if [ -e /vagrant/node_modules ]; then
 		cd /vagrant

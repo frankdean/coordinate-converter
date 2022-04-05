@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Geographical Coordinate Converter",
   "author": {
     "name": "Frank Dean",
@@ -83,8 +83,9 @@
     "env": "env",
     "clean": "rimraf dist",
     "lint": "eslint app/js/*.js app/js/**/*.js test/**/*.js",
+    "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /^\\s*\\.value\\(\\'version\\', \\'.*\\'\\)/, '.value(\\'version\\', \\'' + pkg.version + '\\')', './app/js/version/version.js');\"",
     "prebuild": "mkdirp dist/app/partials --mode=0775 && mkdirp dist/app/css --mode=0775",
-    "build": "$npm_execpath run build:scripts && $npm_execpath run build:css",
+    "build": "$npm_execpath run update-version && $npm_execpath run build:scripts && $npm_execpath run build:css",
     "build:scripts": "cd dist/app && ../../node_modules/uglify-js/bin/uglifyjs ../../app/js/*.js ../../app/js/**/*.js --compress --mangle --source-map \"filename=coord.min.js.map\" --output coord.min.js",
     "build:css": "cssmin app/css/app.css > dist/app/css/app.css && cssmin app/css/ie10-viewport-bug-workaround.css > dist/app/css/ie10-viewport-bug-workaround.css",
     "pre-dist": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist/app/LICENSES', stdout); } \"",
