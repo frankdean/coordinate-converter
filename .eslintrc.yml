@@ -2,29 +2,11 @@ env:
   browser: true
   es2021: true
 extends: eslint:recommended
+overrides: []
 parserOptions:
   ecmaVersion: latest
+  sourceType: module
 rules:
   no-misleading-character-class: off
   no-unused-vars: off
-  no-useless-escape: off
-globals:
-  OpenLocationCode: readonly
-  proj4: readonly
-  browser: readonly
-  by: readonly
-  element: readonly
-  jasmine: readonly
-  protractor: readonly
-  require: readonly
-  spyOn: readonly
-  afterEach: readonly
-  angular: readonly
-  beforeEach: readonly
-  describe: readonly
-  xdescribe: readonly
-  expect: readonly
-  inject: readonly
-  it: readonly
-  xit: readonly
-  module: readonly
+  use-isnan: off

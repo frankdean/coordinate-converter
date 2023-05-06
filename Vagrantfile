@@ -8,7 +8,9 @@ Vagrant.configure("2") do |config|
   # Bento are one of the Vagrant recommended boxes see
   # https://www.vagrantup.com/docs/boxes.html#official-boxes
   # https://app.vagrantup.com/bento
-  config.vm.box = "bento/debian-11"
+  #config.vm.box = "bento/debian-11"
+  config.vm.box = "debian/bullseye64"
+  #config.vm.box_version = "11.20221219.1"
 
   # Set :DEV to 'y' (lower-case) to setup and run the VM as a
   # development environment.  If the VM already exists, run or reload
@@ -29,7 +31,9 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 8000, host: 8084
+  config.vm.network "forwarded_port", guest: 80, host: 8088
+  config.vm.network "forwarded_port", guest: 5173, host: 8080
+  config.vm.network "forwarded_port", guest: 4173, host: 8081
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -45,7 +49,7 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using (VirtualBox)
   # for more information on available options.
   config.vm.provider "virtualbox" do |v|
-    v.name = "Coordinate Converter—Vagrant"
+    v.name = "Coordinate Converter 2—Vagrant"
     # Display the VirtualBox GUI when booting the machine
     if myEnv[:VB_GUI] == "y"
       v.gui = true
@@ -59,7 +63,7 @@ Vagrant.configure("2") do |config|
 
     # Customize the amount of memory on the VM:
     if myEnv[:DEV] == "y"
-      v.memory = "4196"
+      v.memory = "2048"
     else
       v.memory = "1024"
     end

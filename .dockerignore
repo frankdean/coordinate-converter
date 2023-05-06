@@ -1,6 +1,0 @@
-# https://docs.docker.com/engine/reference/builder/#dockerignore-file
-.DS_Store
-.git
-.github
-app/node_modules
-docker*.sh

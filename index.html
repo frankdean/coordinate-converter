@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Geographical Coordinate Converter</title>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body>
+    <noscript>
+      You must enable JavaScript to use this application.
+    </noscript>
+    <div class="container-fluid">
+      <div class="mx-1 pb-3 bg-light">
+        <h1>Geographical Coordinate Converter</h2>
+        <div class="alert alert-warning mx-5" role="alert">
+          <span class="warning">Important</span>:&nbsp; See
+          the <a href="#disclaimer" target="_self">license and disclaimer</a>
+          before using.  <a href="#instructions" target="_self">Instructions</a>
+          are <a href="#instructions" target="_self">below</a>.
+        </div>
+        <form name="form" class="css-form" novalidate>
+          <div>
+            <div class="my-2">
+              <label for="input-coord-format">Display position format</label>
+              <select id="input-coord-format" name="coordFormat">
+                <option value="%d°%M′%S″%c">DMS+</option>
+                <option value="%d°%M′%c">DM+</option>
+                <option value="%d°%c">D+</option>
+                <option value="%i%d">D</option>
+                <option value="%p%d">±D</option>
+                <option value="plus+code">OLC plus+code</option>
+                <option value="osgb36">OS GB 1936 (BNG)</option>
+                <option value="%dd%M'%S&quot;%c">Proj4</option>
+                <option value="%c%D° %M">QLandkarte GT</option>
+                <option value="%c%d°%M′%S″">+DMS</option>
+                <option value="%c%d°%M′">+DM</option>
+                <option value="%c%d°">+D</option>
+                <option value="%d° %M′ %S″ %c">D M S +</option>
+                <option value="%d° %M′ %c">D M +</option>
+                <option value="%d° %c">D +</option>
+                <option value="%c %d° %M′ %S″">+ D M S</option>
+                <option value="%c %d° %M′">+ D M</option>
+                <option value="%c %d°">+ D</option>
+                <option value="%d %m %s%c">Plain DMS+</option>
+                <option value="%d %m%c">Plain DM+</option>
+                <option value="%d%c">Plain D+</option>
+                <option value="%c%d %m %s">Plain +DMS</option>
+                <option value="%c%d %m">Plain +DM</option>
+                <option value="%c%d">Plain +D</option>
+                <option value="IrishGrid">Irish Grid</option>
+                <option value="ITM">Irish Transverse Mercator</option>
+              </select>
+            </div>
+            <div id="position-style-div" class="my-2" style="display: block;">
+              <label for="position-separator">Position ordering and separator</label>
+              <select id="position-separator" name="positionFormat">
+                <option value="lat-lng">lat lng</option>
+                <option value="lat,lng" selected="">lat,lng</option>
+                <option value="lng-lat">lng lat (Proj4 reversed)</option>
+                <option value="lng,lat">lng,lat (Reversed)</option>
+              </select>
+            </div>
+            <div class="my-2">
+              <label for="input-position">Location text</label>
+              <input id="input-position" name="position" type="text" size="30" value="" required="">
+            </div>
+            <div id="position-invalid" class="my-2 alert alert-warning" role="alert" style="display: none">
+              Invalid latitude/longitude.  Also note that latitudes range
+              between -90 and 90 degrees.  Longitudes range be between -180
+              and 180 degrees.
+            </div>
+            <div class="my-2"><p><!-- <b>Location converted to </b>--><span id="position-text"></span></p></div>
+            <div id='div-whereami'>
+              <div id="geolocation-denied" class="d-none" role="alert">
+                Browser denied access to location.
+              </div>
+              <button id="btn-whereami" type="button" class="btn btn-primary">Use my current location</button>
+            </div>
+          </div>
+        </form>
+        <p id="warning" class="alert alert-danger my-3 mx-5">
+          It is your responsibility to confirm the correctness of the converted
+          values.  Do not use these values without checking them against other
+          reliable means, e.g. examining a map that uses the output format and
+          visually confirming the location is as expected.  See also
+          the <a href="#disclaimer" target="_self">disclaimer</a>.
+        </p>
+        <div id="div-ext-links" class="d-none">
+          <h3>Links to external map providers</h3>
+          <p>
+            Clicking the links below will display the above location using the
+            selected service provider.
+          </p>
+          <ul>
+            <li><a id='osm-link' href="#" target="_blank">OpenStreetMap</a>&nbsp;<span class="extlink">&#x29c9;</span></li>
+            <li><a id='google-link' href="#" target="_blank">Google Map</a>&nbsp;<span class="extlink">&#x29c9;</span></li>
+          </ul>
+        </div>
+        <div>
+          <h2 id="instructions">Instructions</h2>
+          <p>
+            This application interprets the text you enter in the <code>Location
+              text</code> field and displays a converted version of the interpreted
+            location according to the options you have selected from the <code>Display
+              location format</code> and <code>Location ordering and separator</code>
+            option lists.  The latter option is only shown if relevant to the selected
+            location format.
+          </p>
+              <p>
+            Many common formats are recognised.  To try a simple example, enter
+            numeric only values, separated by a comma, e.g. <code>51.3,-2.3</code> for
+            <code>N51.3&deg; W2.3&deg;.</code>
+          </p>
+          <p>
+            By experimenting with the different <code>Display location
+            format</code> options, you will see some of the formats that are also
+            accepted as input.
+          </p>
+          <p>
+            The degree symbol (&deg;), single and double quotes and variants of
+            these can be used to represent degrees, minutes and seconds. You can use
+            the lower-case letter 'd' to represent degrees.  Upper-case <code>N, S,
+              W & E</code> can be used to indicate North, South, West and East.  A
+            negative value denotes South for latitude and West for longitude.
+          </p>
+          <p>
+            Generally, latitude is expected to precede longitude.  The exception
+            is where the value is specifically formatted as the
+            <a href="https://en.wikipedia.org/wiki/PROJ.4" target="_blank">proj.4</a>&nbsp;<span class="extlink">&#x29c9;</span> format.  Where
+            longitude preceeds latitude, a lower-case letter 'd', single quote and
+            double quote are used to represent degrees, minutes and seconds.
+            E.g. <code>2d17'40.2"E 48d51'29.7"N</code>.
+          </p>
+          <p>
+            Examples:
+          </p>
+              <ul>
+                <li>48&deg;51'29.7"N 2&deg;17'40.2"E</li>
+                <li>48&deg;51.495'N 2&deg;17.67'E</li>
+                <li>48.85825&deg;N 2.2945&deg;E</li>
+              </ul>
+          <p>
+            To confirm correct interpretation of the input text, it is advisable
+            to select the <code>Display location format</code> option that you
+            believe matches your input text format and confirm that the output
+            value exactly matches that input location text.
+          </p>
+          <h3>OLC plus+code option</h3>
+          <p>
+            This option generates an Open Location Code also known as a Plus Code.
+            See the <a href="https://en.wikipedia.org/wiki/Open_Location_Code"
+            target="blank">Open Location
+            Code</a>&nbsp;<span class="extlink">&#x29c9;</span> article for more
+            information about <a href="http://openlocationcode.com">Open Location
+            Codes</a>&nbsp;<span class="extlink">&#x29c9;</span> and visit
+            the <a href="http://plus.codes/">Plus Code demonstration
+            site</a>&nbsp;<span class="extlink">&#x29c9;</span> to try them out.
+          </p>
+          <p>
+            The source code for this application can be cloned with:<br/><br/>
+            <code>git clone git://www.fdsd.co.uk/coordinate-converter.git</code>
+          </p>
+        </div>
+        <div>
+          <h2 id="privacy">Privacy</h2>
+          <p class="small">
+            This application is implemented using the JavaScript environment which
+            runs entirely within your browser.  None of the values you enter as
+            locations are transmitted elsewhere nor stored by this application.
+            It is something I developed for my own use and am simply happy to
+            share it for public use.  I hope you find it useful too.
+          </p>
+          <p class="small">
+            The application generates links providing a convenient way to display
+            maps using some external map service providers.  When you click on
+            those links, the currently interpreted location will be included in
+            the URL passed to those sites.
+          </p>
+        </div>
+        <div>
+          <h2 id="disclaimer">License including disclaimer</h2>
+          <p class="small">
+            Coordinate Converter</br>
+            &copy; 2016-2023 Frank Dean
+          </p>
+          <p class="small">
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or any
+            later version.
+          </p>
+          <p class="small">
+            This program is distributed in the hope that it will be useful, but
+            WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See
+            the <a href="/LICENSE.txt">GNU General Public License</a> for more
+            details.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <footer class="footer">
+        <div id="version" class="container" ng-cloak>
+          <p class="text-muted">Coordinate converter: v<span>2.0.0</span></p>
+        </div>
+      </footer>
+    </div>
+    <script type="module" src="/index.js"></script>
+  </body>
+</html>

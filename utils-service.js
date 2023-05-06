@@ -1,30 +1,38 @@
-/**
- * @license Coordinate Converter
- * (c) 2016, 2017 Frank Dean <frank@fdsd.co.uk>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-'use strict';
+// -*- mode: js2; fill-column: 80; indent-tabs-mode: nil; c-basic-offset: 2; -*-
+// vim: set tw=80 ts=2 sts=0 sw=2 et ft=js norl:
+/*
+    This file is part of Trip Server 2, a program to support trip recording and
+    itinerary planning.
 
-angular.module('myApp.utils.factory', [])
+    Copyright (C) 2022-2023 Frank Dean <frank.dean@fdsd.co.uk>
 
-  .factory(
-    'UtilsService',
-    ['$log',
-     '$window',
-     '$q',
-     function($log, $window, $q) {
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+export { parseLocationText, convertToFormat };
+
+import proj4 from 'proj4';
+
+// Note for the below import to work, it needs the open-location-code version at
+// 'git+https://github.com/google/open-location-code.git#817c008'
+import OpenLocationCode from 'open-location-code/js/src/openlocationcode.js';
+
+// Most of this code is copied from Trip Server v1 `trip-web-client/app/js/utils-factory.js`.
+// It is deliberately indented to match the indent in that file to make comparison easier.
+// Note: the coordinate order of function parameters is lat, lng not x, y.
+
+var $log = console;
 
        var _singleZeroPad = function(v) {
          return (v < 10 ? '0' + v : v);
@@ -40,6 +48,27 @@ angular.module('myApp.utils.factory', [])
            }
          }
          return r;
+       };
+
+       var validateCoordinate = function(lat, lng) {
+         return (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180);
+       };
+
+       var validateCoordinates = function(coords) {
+         var retval = true;
+         if (Array.isArray(coords)) {
+           coords.forEach(function(v, k, a) {
+             // $log.debug(k, ' => ', v);
+             if (!validateCoordinate(v.lat, v.lng)) {
+               $log.warn('Invalid lat/lng', v.lat, v.lng);
+               retval = false;
+             }
+           });
+         } else {
+           $log.error('coords is not an array');
+           retval = false;
+         }
+         return retval;
        };
 
        var formatCoordinates = function(v, format, latOrLng) {
@@ -427,30 +456,6 @@ angular.module('myApp.utils.factory', [])
          return retval;
        };
 
-       var getLocation = function(options) {
-         if ($window.navigator && $window.navigator.geolocation) {
-           var deferred = $q.defer();
-           $window.navigator.geolocation.getCurrentPosition(
-             function(position) {
-               deferred.resolve(position.coords.latitude + ',' + position.coords.longitude);
-             },
-             function(error) {
-               deferred.resolve(null);
-             },
-             options);
-           return deferred.promise;
-         } else {
-           return null;
-         }
-       };
-
-       return {
-         formatCoordinates: formatCoordinates,
-         formatPosition: formatPosition,
-         parseGeoLocation: parseGeoLocation,
-         convertDmsCoordsToDegreeCoords: convertDmsCoordsToDegreeCoords,
-         getLocation: getLocation,
-         parseTextAsDegrees: parseTextAsDegrees,
-         convertToFormat: convertToFormat
-       };
-     }]);
+const parseLocationText = function(text) {
+  return parseTextAsDegrees(text);
+};

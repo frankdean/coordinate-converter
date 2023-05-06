@@ -1,7 +1,7 @@
 # Geographical Coordinate Converter
 
-This is a JavaScript based application using the AngularJS web application
-framework.
+This is a JavaScript application to convert between some common geographical
+coordinate formats.
 
 It parses free text input, converting to and from the following formats:
 
@@ -14,55 +14,34 @@ It parses free text input, converting to and from the following formats:
 - Irish Transverse Mercator
 
 [olc]: https://en.wikipedia.org/wiki/Open_Location_Code
-[trip-web-client]: https://github.com/frankdean/trip-web-client
 
-## Docker
+## Building
 
-The application can be run in Docker as follows:
+The application is built using [Vite](https://vitejs.dev/).
 
-	$ docker run --name convert-coord --publish 8000:80 \
-	-d fdean/convert-coord:latest
+The following command are executed in the root of the project directory.
 
-Stop the container with:
+Run the application for development:
 
-	$ docker container stop convert-coord
+	$ npm run dev
+	$ yarn dev
 
-Start the container with:
+Build a release:
 
-	$ docker container rm convert-coord
+	$ npm run build
+	$ yarn build
 
-It is also possible to develop the application using a Docker
-container, by working in the directory containing the current source
-code, and peforming a bind mount of the source folder with the
-`/webapp` folder in the container.
+Preview the release:
 
-**Note:** the container will already have a copy of the source code in
-the `/webapp` folder.  The bind mount will bind over that folder,
-hiding its contents with the current source directory on the host
-machine.
+	$ npm run preview
+	$ yarn preview
 
-To build a new container:
+Build a release with a different configuration:
 
-	$ docker build  -f Dockerfile-dev -t convert-coord-dev .
+	$ npm run build -- --config ./vite.config.prod.js
+	$ yarn build --config ./vite.config.prod.js
 
-To run the container, and mount the current directory at `/webapp`:
-
-	$ docker run --name convert-coord-dev -e CHROME_BIN=/usr/bin/chromium \
-	--mount type=bind,source="$(pwd)",target=/webapp \
-	--shm-size=128m --publish 8000:8000 -d convert-coord-dev
-
-To start and connect to a Bash shell in the running container:
-
-	$ docker exec -it convert-coord-dev bash -il
-
-Then, in the container, run the tests:
-
-	$ cd /webapp
-	$ yarn
-	$ yarn run lint
-	$ yarn run test-single-run
-	$ yarn run protractor
-
-Alternatively, run the test directly from the host:
-
-	$ docker exec -it -w /webapp convert-coord-dev yarn run test-single-run
+The files built under `dist` can be deployed using a static web-server such as
+Apache or Nginx.  The default build requires the files to be in the root
+folder of the web-server.  Modify and build with the `./vite.config.prod.js`
+configuration to use a sub-directory on the host.
