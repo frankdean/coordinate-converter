@@ -1,7 +1,7 @@
 /.vagrant/
-/web/resources/
-/provisioning/downloads/
-/yarn-error.log
-/node_modules/
-/.parcel-cache/
+/convert-coord-release-v*
 /dist/
+/node_modules/
+/provisioning/downloads/
+/web/resources/
+/yarn-error.log

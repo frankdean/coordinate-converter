@@ -11,10 +11,19 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint *.js"
+    "lint": "eslint *.js,",
+    "clean": "rimraf dist",
+    "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
+    "build-release": "$npm_execpath run update-version && $npm_execpath run clean && $npm_execpath run build --config=vite.config.prod.js && $npm_execpath run tar-release && $npm_execpath run zip-release",
+    "tar-release": "node -e \"require('shelljs'); require('tar').c({gzip: true, sync: true, C: 'dist', file: '${npm_package_name}-release-v${npm_package_version}.tgz'},['.'])\"",
+    "zip-release": "node -e \"require('shelljs');const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip');\""
   },
   "devDependencies": {
+    "adm-zip": "^0.5.10",
     "eslint": "^8.40.0",
+    "rimraf": "^5.0.0",
+    "shelljs": "^0.8.5",
+    "tar": "^6.1.14",
     "vite": "^4.3.5"
   },
   "dependencies": {
