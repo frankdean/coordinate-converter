@@ -19,7 +19,7 @@ It parses free text input, converting to and from the following formats:
 
 The application is built using [Vite](https://vitejs.dev/).
 
-The following command are executed in the root of the project directory.
+The following commands are executed in the root of the project directory.
 
 Run the application for development:
 
