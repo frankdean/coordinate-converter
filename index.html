@@ -179,6 +179,25 @@
           </p>
         </div>
         <div>
+          <h2>Software Used to Implement this Application</h2>
+          <h3>Bootstrap</h3>
+          <p>A popular HTML, CSS and JavaScript framework for developing
+            responsive, mobile first projects on the web.</p>
+          <p><a href="https://github.com/twbs/bootstrap/blob/main/LICENSE">MIT
+              license</a></p>
+          <h3>Open Location Code (Plus Codes)</h3>
+          <p>Open Location Code is a library to generate short codes, called
+          "plus codes", that can be used as digital addresses where street
+          addresses don't exist.</p>
+          <p><a href="https://github.com/google/open-location-code/blob/main/LICENSE">Apache-2.0
+              license</a></p>
+          <h3>Proj4js</h3>
+          <p>A JavaScript library to transform coordinates from one coordinate
+          system to another, including datum transformations.</p>
+          <p><a href="https://github.com/proj4js/proj4js/blob/master/LICENSE.md">Proj4js
+          License</a></p>
+        </div>
+        <div>
           <h2 id="disclaimer">License including disclaimer</h2>
           <p class="small">
             Coordinate Converter</br>
@@ -200,13 +219,16 @@
         </div>
       </div>
     </div>
-    <div id="footer">
-      <footer class="footer">
-        <div id="version" class="container" ng-cloak>
-          <p class="text-muted">Coordinate converter: v<span>2.0.0</span></p>
-        </div>
-      </footer>
+    <div id="footer" class="sticky-bottom px-2 py-2 text-bg-secondary">
+      <div id="version" class="small">
+        Coordinate converter: v<span>2.0.1</span>
+      </div>
     </div>
     <script type="module" src="/index.js"></script>
+    <!--
+    <script type="module"
+            src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    -->
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
   </body>
 </html>
