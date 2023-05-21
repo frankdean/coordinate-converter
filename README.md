@@ -15,6 +15,28 @@ It parses free text input, converting to and from the following formats:
 
 [olc]: https://en.wikipedia.org/wiki/Open_Location_Code
 
+## Using Play with Docker to Preview the Application
+
+[play]: https://labs.play-with-docker.com "Play with Docker"
+
+The application can be run in the [Play-with-docker][play] environment.
+
+1.  Navigate to [Play with Docker][play] and login using a Docker ID.  If you
+	do not have one, you will see the option to sign up after clicking `Login`
+	then `Docker`.
+
+1.  Click `+ ADD NEW INSTANCE`
+
+1.  Run the container with:
+
+		$ docker container run --publish 8080:4173 --name cc -d fdean/convert-coord
+
+1.  Once the application is running a link titled `8080` will be shown next to
+    the `OPEN PORT` button at the top of the page.  Click on the `8080` link
+    to open a new browser window to the running web server.  If the port
+    number doesn't show up, click on `OPEN PORT` and enter the port number as
+    `8080`.
+
 ## Building
 
 The application is built using [Vite](https://vitejs.dev/).

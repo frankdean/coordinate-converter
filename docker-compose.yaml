@@ -1,0 +1,9 @@
+# -*- mode: docker-compose; -*- vim: set ft=yaml:
+version: '3.7'
+
+services:
+  web:
+    build: .
+    image: fdean/convert/coord-coord:latest
+    ports:
+      - 8080:4173
