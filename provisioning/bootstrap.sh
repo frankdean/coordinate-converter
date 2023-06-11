@@ -81,6 +81,7 @@ if [ -f /etc/debian_version ]; then
     locale-gen
     #export LC_ALL=en_GB.utf8
     localedef -i en_GB -c -f UTF-8 -A /usr/share/locale/locale.alias en_GB.UTF-8
+    # Set locale to 'none' - locale will default to that of SSH user
     update-locale LANG LANGUAGE
 
     ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
@@ -93,16 +94,24 @@ if [ -f /etc/debian_version ]; then
     apt-get install $DEB_OPTIONS apt-transport-https
     apt-get install $DEB_OPTIONS curl git vim screen nginx-light
 
-    if [ "$VB_GUI" == "y" ]; then
-	apt-get install -y lxde
+    if [ ! -d /etc/apt/keyrings ]; then
+	install -m 0755 -d /etc/apt/keyrings
     fi
+    if [ ! -e /etc/apt/keyrings/docker.gpg ]; then
+	$SU_CMD 'curl -fsSL https://download.docker.com/linux/debian/gpg' | gpg --no-tty --dearmor -o /etc/apt/keyrings/docker.gpg 2>&1 >/dev/null
+	chmod a+r /etc/apt/keyrings/docker.gpg
+    fi
+    if [ ! -e /etc/apt/sources.list.d/docker.list ]; then
+	echo \
+	    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+	    tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-    ## Additional configuration to also support developing with Trip Server version 1 series.
-    if [ "$TRIP_DEV" == "y" ]; then
-	apt-get install -y chromium chromium-l10n firefox-esr-l10n-en-gb vim
-	# install_nodejs
     fi
-    ## END Additional configuration to also support developing with Trip Server version 1 series.
+    apt-get update
+    apt-get install $DEB_OPTIONS docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+    adduser vagrant docker >/dev/null
 fi
 
 install_nodejs

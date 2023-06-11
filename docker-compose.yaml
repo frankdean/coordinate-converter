@@ -4,6 +4,6 @@ version: '3.7'
 services:
   web:
     build: .
-    image: fdean/convert/coord-coord:latest
+    image: fdean/convert-coord:latest
     ports:
-      - 8080:4173
+      - 8090:80

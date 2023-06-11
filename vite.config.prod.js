@@ -5,6 +5,9 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
   if (command === 'build') {
     return {
       base: '/convert-coord/',
+      build: {
+        outDir: 'dist-prod',
+      },
     };
   } else {
     return {

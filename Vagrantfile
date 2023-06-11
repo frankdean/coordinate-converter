@@ -12,17 +12,6 @@ Vagrant.configure("2") do |config|
   config.vm.box = "debian/bullseye64"
   #config.vm.box_version = "11.20221219.1"
 
-  # Set :DEV to 'y' (lower-case) to setup and run the VM as a
-  # development environment.  If the VM already exists, run or reload
-  # with the '--provision' option, e.g. 'vagrant reload --provision'.
-  #
-  # Set :VB_GUI to 'y' (lower-case) to run a GUI environment.  If the
-  # VM already exists, run or reload with the '--provision' option,
-  # e.g. 'vagrant reload --provision'.
-  #
-  myEnv = { :DEV => "y",
-            :VB_GUI => "n" }
-
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -34,6 +23,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8088
   config.vm.network "forwarded_port", guest: 5173, host: 8080
   config.vm.network "forwarded_port", guest: 4173, host: 8081
+  config.vm.network "forwarded_port", guest: 8090, host: 8090
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -49,30 +39,14 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using (VirtualBox)
   # for more information on available options.
   config.vm.provider "virtualbox" do |v|
-    v.name = "Coordinate Converter 2—Vagrant"
-    # Display the VirtualBox GUI when booting the machine
-    if myEnv[:VB_GUI] == "y"
-      v.gui = true
-    end
-
-    # The amount of video ram in MB
-    # https://www.virtualbox.org/manual/ch08.html#vboxmanage-cmd-overview
-    if v.gui
-      v.customize [ "modifyvm", :id, "--vram", "32" ]
-    end
-
+    v.name = "Coordinate Converter 2-Vagrant"
     # Customize the amount of memory on the VM:
-    if myEnv[:DEV] == "y"
-      v.memory = "2048"
-    else
-      v.memory = "1024"
-    end
-
+    v.memory = "2048"
     # Whether to use a master VM and linked clones
     v.linked_clone = false
   end
 
-  config.vm.provision :shell, path: "provisioning/bootstrap.sh", env: myEnv
-  config.vm.provision :shell, path: "provisioning/bootconfig.sh", run: "always", env: myEnv
+  config.vm.provision :shell, path: "provisioning/bootstrap.sh"
+  config.vm.provision :shell, path: "provisioning/bootconfig.sh", run: "always"
 
 end

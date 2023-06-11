@@ -29,7 +29,7 @@ The application can be run in the [Play-with-docker][play] environment.
 
 1.  Run the container with:
 
-		$ docker container run --publish 8080:4173 --name cc -d fdean/convert-coord
+		$ docker container run --publish 8080:80 --name cc -d fdean/convert-coord
 
 1.  Once the application is running a link titled `8080` will be shown next to
     the `OPEN PORT` button at the top of the page.  Click on the `8080` link
@@ -43,6 +43,11 @@ The application is built using [Vite](https://vitejs.dev/).
 
 The following commands are executed in the root of the project directory.
 
+Install the required packages:
+
+	$ npm install
+	$ yarn
+
 Run the application for development:
 
 	$ npm run dev
@@ -53,6 +58,9 @@ Build a release:
 	$ npm run build
 	$ yarn build
 
+The object files are created under `./dist`.  The URLs in this build are
+based on the root folder.
+
 Preview the release:
 
 	$ npm run preview
@@ -62,6 +70,9 @@ Build a release with a different configuration:
 
 	$ npm run build -- --config ./vite.config.prod.js
 	$ yarn build --config ./vite.config.prod.js
+
+The object files are created under `./dist-prod`.  The URLs in this build are
+based on a sub-folder named `convert-coord`.
 
 The files built under `dist` can be deployed using a static web-server such as
 Apache or Nginx.  The default build requires the files to be in the root
