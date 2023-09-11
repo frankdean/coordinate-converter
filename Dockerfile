@@ -1,8 +1,11 @@
 # -*- mode: dockerfile; -*- vim: set ft=dockerfile:
-FROM node:16-alpine AS development
+FROM node:18-alpine AS development
 RUN apk add --no-cache git
+# Update to latest version of npm
+RUN npm install -g npm
 USER node
 WORKDIR /convert-coord
+RUN chown node:node /convert-coord
 COPY LICENSE index.html index.js location-service.js package.json \
     vite.config.js vite.config.prod.js \
     utils-service.js ./
