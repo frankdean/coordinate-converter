@@ -78,3 +78,40 @@ The files built under `dist` can be deployed using a static web-server such as
 Apache or Nginx.  The default build requires the files to be in the root
 folder of the web-server.  Modify and build with the `./vite.config.prod.js`
 configuration to use a sub-directory on the host.
+
+### Creating a Release with Docker/Podman
+
+1.  Build the release:
+
+		$ podman-compose -f docker-compose-dev.yaml up -d --build
+
+2.  Monitor the build:
+
+		$ podman logs -f convert-coord_web_1
+
+3.  The distribution files are created in the project's root directory on the
+    host.
+
+		$ ls convert-coord-release-*
+
+4.  Re-build the release:
+
+		$ podman exec -it convert-coord_web_1 bash
+		$ cd /convert-coord
+		$ yarn build-release
+
+5.  To develop using Vite:
+
+		$ podman exec -it convert-coord_web_1 bash
+		$ cd /convert-coord
+		$ yarn dev --host
+
+	Navigate to <http://localhost:8080/> to view the application.
+
+	If changes to the code are not recognised, press the `r` key to restart
+    the Vite server.
+
+6.  To stop the container, optionally including the `-v` switch to remove the
+    volume used to hold the required npm packages:
+
+		$ podman-compose -f docker-compose-dev.yaml down -v

@@ -1,0 +1,13 @@
+# -*- mode: dockerfile; -*- vim: set ft=dockerfile:
+FROM node:18-bullseye-slim AS development
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
+    ca-certificates \
+    nginx-light git
+
+COPY docker-entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
