@@ -6,9 +6,9 @@ RUN npm install -g npm
 USER node
 WORKDIR /convert-coord
 RUN chown node:node /convert-coord
-COPY LICENSE index.html index.js location-service.js package.json \
-    vite.config.js vite.config.prod.js \
-    utils-service.js ./
+COPY --chown=node:node LICENSE index.html index.js location-service.js \
+    package.json vite.config.js vite.config.prod.js utils-service.js \
+    yarn.lock ./
 RUN npm install
 # Create both distribution formats, one under the web root, the other under
 # the folder configured in `vite.config.prod.js`.

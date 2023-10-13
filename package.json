@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Geographical Coordinate Converter",
   "repository": "git://www.fdsd.co.uk/coordinate-converter.git",
   "author": "Frank Dean",

@@ -85,6 +85,9 @@ configuration to use a sub-directory on the host.
 
 		$ podman-compose -f docker-compose-dev.yaml up -d --build
 
+	If you get errors like `Error: statfs .../convert-coord: no such file or
+    directory`, try restarting the podman machine.
+
 2.  Monitor the build:
 
 		$ podman logs -f convert-coord_web_1
@@ -104,6 +107,8 @@ configuration to use a sub-directory on the host.
 
 		$ podman exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
+		$ yarn audit
+		$ yarn outdated
 		$ yarn dev --host
 
 	Navigate to <http://localhost:8080/> to view the application.
@@ -115,3 +120,22 @@ configuration to use a sub-directory on the host.
     volume used to hold the required npm packages:
 
 		$ podman-compose -f docker-compose-dev.yaml down -v
+
+## Building Docker Image for Release
+
+1.  Rebuild the image with:
+
+		$ podman-compose up -d --build --no-cache --force-recreate
+
+	or:
+
+		$ podman build --no-cache -t fdean/convert-coord .
+
+2.  Tag the release:
+
+		$ podman tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
+
+3.  Push the release:
+
+		$ podman push fdean/convert-coord:latest
+		$ podman push fdean/convert-coord:$VERSION
