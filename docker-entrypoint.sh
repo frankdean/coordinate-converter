@@ -7,9 +7,9 @@ if [ -f /convert-coord/package.json ]
 then
     DIR=$(pwd)
     cd /convert-coord
-    yarn
-    yarn build-release
-    yarn build
+    npm install
+    npm run build-release
+    npm run build
     cd "$DIR"
 fi
 

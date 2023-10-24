@@ -16,7 +16,11 @@ function setup_nginx
 }
 
 setup_nginx
-su - vagrant -c 'cd /vagrant && yarn install'
+su - vagrant -c 'cd /vagrant && npm install'
+
+if [ ! -f /home/vagrant/dist/index.html ]; then
+    su - vagrant -c 'cd /vagrant && npm run build'
+fi
 
 egrep '^export\s+EDITOR' /home/vagrant/.profile >/dev/null 2>&1
 if [ $? -ne 0 ]; then

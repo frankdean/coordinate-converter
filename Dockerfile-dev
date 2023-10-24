@@ -5,6 +5,8 @@ RUN apt-get update \
     ca-certificates \
     nginx-light git
 
+RUN npm install -g npm
+
 COPY docker-entrypoint.sh /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]

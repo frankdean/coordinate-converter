@@ -101,15 +101,15 @@ configuration to use a sub-directory on the host.
 
 		$ podman exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
-		$ yarn build-release
+		$ npm run build-release
 
 5.  To develop using Vite:
 
 		$ podman exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
-		$ yarn audit
-		$ yarn outdated
-		$ yarn dev --host
+		$ npm audit
+		$ npm outdated
+		$ npm run dev -- --host
 
 	Navigate to <http://localhost:8080/> to view the application.
 

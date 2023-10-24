@@ -1,10 +1,10 @@
 {
   "name": "convert-coord",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Geographical Coordinate Converter",
   "repository": "git://www.fdsd.co.uk/coordinate-converter.git",
   "author": "Frank Dean",
-  "license": "GPL-3.0+",
+  "license": "GPL-3.0-or-later",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "lint": "eslint *.js,",
     "clean": "rimraf dist dist-prod",
-    "pre-dist": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist-prod/LICENSES', stdout); } \"",
+    "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist-prod/LICENSES.txt",
+    "pre-dist-yarn": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist-prod/LICENSES.txt', stdout); } \"",
     "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
     "build-release": "$npm_execpath run update-version && $npm_execpath run clean && $npm_execpath run build -- --config=vite.config.prod.js && $npm_execpath run pre-dist && $npm_execpath run tar-release && $npm_execpath run zip-release",
     "tar-release": "node -e \"require('shelljs'); require('tar').c({gzip: true, sync: true, C: 'dist-prod', file: '${npm_package_name}-release-v${npm_package_version}.tgz'},['.'])\"",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "adm-zip": "^0.5.10",
     "eslint": "^8.40.0",
+    "license-checker-rseidelsohn": "^4.2.10",
     "rimraf": "^5.0.0",
     "shelljs": "^0.8.5",
     "tar": "^6.1.14",
@@ -29,7 +31,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
-    "open-location-code": "git+https://github.com/google/open-location-code.git#817c008",
+    "open-location-code": "git+https://github.com/google/open-location-code.git#817c0086479ac263d328f903605db8233a018546",
     "proj4": "^2.9.0"
   }
 }
