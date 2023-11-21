@@ -107,6 +107,7 @@ configuration to use a sub-directory on the host.
 
 		$ podman exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
+		$ npm run lint
 		$ npm audit
 		$ npm outdated
 		$ npm run dev -- --host
