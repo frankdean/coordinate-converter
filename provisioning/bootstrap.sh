@@ -61,6 +61,12 @@ function install_nodejs
 	    /usr/local/lib/nodejs/node-current/lib/node_modules/npm/bin/npm-cli.js \
 	    install -g yarn
     fi
+    # Upgrade npm to latest available version
+    if [ -x /usr/local/lib/nodejs/node-current/bin/node ]; then
+	PATH="/usr/local/lib/nodejs/node-current/bin:$PATH" \
+	    /usr/local/lib/nodejs/node-current/lib/node_modules/npm/bin/npm-cli.js \
+	    install -g npm
+    fi
 }
 
 ##############################################################################
