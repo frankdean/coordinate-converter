@@ -132,11 +132,19 @@ configuration to use a sub-directory on the host.
 
 		$ podman build --no-cache -t fdean/convert-coord .
 
-2.  Tag the release:
+2.  If built with `podman-compose`, optionally browse to
+    <http://localhost:8090/> to view the running application.
+
+
+3.  If built with `podman-compose`, stop the running container with:
+
+		$ podman-compose down
+
+4.  Tag the release:
 
 		$ podman tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
 
-3.  Push the release:
+5.  Push the release:
 
-		$ podman push fdean/convert-coord:latest
 		$ podman push fdean/convert-coord:$VERSION
+		$ podman push fdean/convert-coord:latest
