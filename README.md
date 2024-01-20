@@ -83,14 +83,17 @@ configuration to use a sub-directory on the host.
 
 1.  Build the release:
 
-		$ podman-compose -f docker-compose-dev.yaml up -d --build
+		$ docker compose -f docker-compose-dev.yaml up -d --build
 
-	If you get errors like `Error: statfs .../convert-coord: no such file or
-    directory`, try restarting the podman machine.
+	When running `podman`, if you get errors like `Error: statfs
+    .../convert-coord: no such file or directory`, try restarting the Podman
+    machine.
 
 2.  Monitor the build:
 
-		$ podman logs -f convert-coord_web_1
+		$ docker logs -f convert-coord_web_1
+
+	Navigate to <http://localhost:8090/> to view the application.
 
 3.  The distribution files are created in the project's root directory on the
     host.
@@ -99,13 +102,13 @@ configuration to use a sub-directory on the host.
 
 4.  Re-build the release:
 
-		$ podman exec -it convert-coord_web_1 bash
+		$ docker exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
 		$ npm run build-release
 
 5.  To develop using Vite:
 
-		$ podman exec -it convert-coord_web_1 bash
+		$ docker exec -it convert-coord_web_1 bash
 		$ cd /convert-coord
 		$ npm run lint
 		$ npm audit
@@ -120,31 +123,31 @@ configuration to use a sub-directory on the host.
 6.  To stop the container, optionally including the `-v` switch to remove the
     volume used to hold the required npm packages:
 
-		$ podman-compose -f docker-compose-dev.yaml down -v
+		$ docker compose -f docker-compose-dev.yaml down -v
 
 ## Building Docker Image for Release
 
 1.  Rebuild the image with:
 
-		$ podman-compose up -d --build --no-cache --force-recreate
+		$ podman compose up -d --build --no-cache --force-recreate
 
 	or:
 
-		$ podman build --no-cache -t fdean/convert-coord .
+		$ docker build --no-cache -t fdean/convert-coord .
+		$ docker compose up -d
 
-2.  If built with `podman-compose`, optionally browse to
-    <http://localhost:8090/> to view the running application.
+2.  Optionally browse to <http://localhost:8090/> to view the running
+    application.
 
+3.  Stop the running container with:
 
-3.  If built with `podman-compose`, stop the running container with:
-
-		$ podman-compose down
+		$ docker compose down
 
 4.  Tag the release:
 
-		$ podman tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
+		$ docker tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
 
 5.  Push the release:
 
-		$ podman push fdean/convert-coord:$VERSION
-		$ podman push fdean/convert-coord:latest
+		$ docker push fdean/convert-coord:$VERSION
+		$ docker push fdean/convert-coord:latest
