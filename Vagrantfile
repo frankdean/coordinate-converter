@@ -9,8 +9,8 @@ Vagrant.configure("2") do |config|
   # https://www.vagrantup.com/docs/boxes.html#official-boxes
   # https://app.vagrantup.com/bento
   #config.vm.box = "bento/debian-11"
-  config.vm.box = "debian/bullseye64"
-  #config.vm.box_version = "11.20231009.1"
+  config.vm.box = "debian/bookworm64"
+  #config.vm.box_version = "12.20231009.1"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -23,7 +23,6 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8088
   config.vm.network "forwarded_port", guest: 5173, host: 8080
   config.vm.network "forwarded_port", guest: 4173, host: 8081
-  config.vm.network "forwarded_port", guest: 8090, host: 8090
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

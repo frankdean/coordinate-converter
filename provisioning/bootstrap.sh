@@ -3,8 +3,8 @@
 # Uncomment the following to debug the script
 #set -x
 
-NODE_VERSION="v18.17.1"
-NODE_SHA256=07e76408ddb0300a6f46fcc9abc61f841acde49b45020ec4e86bb9b25df4dced
+NODE_VERSION="v18.19.0"
+NODE_SHA256=61632bb78ee828d6e8f42adc0bc2238a6b8200007093988d3927176a372281e8
 NODE_FILENAME="node-${NODE_VERSION}-linux-x64"
 NODE_TAR_FILENAME="${NODE_FILENAME}.tar.xz"
 NODE_EXTRACT_DIR="${NODE_FILENAME}"
@@ -99,25 +99,6 @@ if [ -f /etc/debian_version ]; then
 
     apt-get install $DEB_OPTIONS apt-transport-https
     apt-get install $DEB_OPTIONS curl git vim screen nginx-light
-
-    if [ ! -d /etc/apt/keyrings ]; then
-	install -m 0755 -d /etc/apt/keyrings
-    fi
-    if [ ! -e /etc/apt/keyrings/docker.gpg ]; then
-	$SU_CMD 'curl -fsSL https://download.docker.com/linux/debian/gpg' | gpg --no-tty --dearmor -o /etc/apt/keyrings/docker.gpg 2>&1 >/dev/null
-	chmod a+r /etc/apt/keyrings/docker.gpg
-    fi
-    if [ ! -e /etc/apt/sources.list.d/docker.list ]; then
-	echo \
-	    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-	    tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-    fi
-    apt-get update
-    apt-get install $DEB_OPTIONS docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-    adduser vagrant docker >/dev/null
 fi
 
 install_nodejs
