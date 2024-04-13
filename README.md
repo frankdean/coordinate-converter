@@ -53,31 +53,20 @@ Run the application for development:
 	$ npm run dev
 	$ yarn dev
 
-Build a release:
+Build release files:
 
 	$ npm run build
 	$ yarn build
 
-The object files are created under `./dist`.  The URLs in this build are
-based on the root folder.
+The object files are created under `./dist`.
 
-Preview the release:
+Preview using the files under `./dist`:
 
 	$ npm run preview
 	$ yarn preview
 
-Build a release with a different configuration:
-
-	$ npm run build -- --config ./vite.config.prod.js
-	$ yarn build --config ./vite.config.prod.js
-
-The object files are created under `./dist-prod`.  The URLs in this build are
-based on a sub-folder named `convert-coord`.
-
 The files built under `dist` can be deployed using a static web-server such as
-Apache or Nginx.  The default build requires the files to be in the root
-folder of the web-server.  Modify and build with the `./vite.config.prod.js`
-configuration to use a sub-directory on the host.
+Apache or Nginx.
 
 ### Creating a Release with Docker/Podman
 

@@ -12,13 +12,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint *.js",
-    "clean": "rimraf dist dist-prod",
-    "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist-prod/LICENSES.txt",
-    "pre-dist-yarn": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist-prod/LICENSES.txt', stdout); } \"",
-    "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
-    "build-release": "$npm_execpath run update-version && $npm_execpath run clean && $npm_execpath run build -- --config=vite.config.prod.js && $npm_execpath run pre-dist && $npm_execpath run tar-release && $npm_execpath run zip-release",
-    "tar-release": "node -e \"require('shelljs'); require('tar').c({gzip: true, sync: true, C: 'dist-prod', file: '${npm_package_name}-release-v${npm_package_version}.tgz'},['.'])\"",
-    "zip-release": "node -e \"require('shelljs');const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist-prod','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip');\""
+    "clean": "rimraf dist",
+    "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist/LICENSES.txt",
+    "pre-dist-yarn": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist/LICENSES.txt', stdout); } \"",
+    "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([-rc.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
+    "build-release": "$npm_execpath run update-version && $npm_execpath run clean && $npm_execpath run build && $npm_execpath run pre-dist && $npm_execpath run tar-release && $npm_execpath run zip-release",
+    "tar-release": "node -e \"require('shelljs'); require('tar').c({gzip: true, sync: true, C: 'dist', file: '${npm_package_name}-release-v${npm_package_version}.tgz'},['.'])\"",
+    "zip-release": "node -e \"require('shelljs');const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip');\""
   },
   "devDependencies": {
     "adm-zip": "^0.5.10",

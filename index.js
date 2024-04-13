@@ -20,7 +20,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { LocationParser } from '/location-service.js';
+import { LocationParser } from './location-service.js';
 
 class App {
   constructor() {
