@@ -5,9 +5,9 @@ import terser from '@rollup/plugin-terser';
 export default {
   input: 'index.js',
   output: {
-    compact: false,
+    compact: true,
     dir: 'dist',
-    format: 'es',
+    format: 'iife',
     entryFileNames: '[name].js',
     sourcemap: true
   },
