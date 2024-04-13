@@ -8,11 +8,13 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "bundle": "$npm_execpath run clean && mkdirp dist --mode=0775 && cp index.html dist/ && cp node_modules/bootstrap/dist/css/bootstrap.min.css* dist/ && rollup -c && $npm_execpath run post-bundle",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint *.js",
     "clean": "rimraf dist dist-prod",
+    "post-bundle": "node -e \"const shell = require('shelljs'); shell.sed('-i', /\\/node_modules\\/bootstrap\\/dist\\/css\\/bootstrap.min.css/, 'bootstrap.min.css', 'dist/index.html'); shell.sed('-i', /\\/index.js/, 'index.js', 'dist/index.html');\"",
     "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist-prod/LICENSES.txt",
     "pre-dist-yarn": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist-prod/LICENSES.txt', stdout); } \"",
     "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
@@ -21,10 +23,14 @@
     "zip-release": "node -e \"require('shelljs');const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist-prod','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip');\""
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "adm-zip": "^0.5.10",
     "eslint": "^8.40.0",
     "license-checker-rseidelsohn": "^4.2.10",
     "rimraf": "^5.0.0",
+    "rollup": "^4.14.2",
     "shelljs": "^0.8.5",
     "tar": "^6.1.14",
     "vite": "^5.0.12"
