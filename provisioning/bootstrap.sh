@@ -3,10 +3,10 @@
 # Uncomment the following to debug the script
 #set -x
 
-NODE_VERSION="v18.19.0"
-NODE_SHA256=61632bb78ee828d6e8f42adc0bc2238a6b8200007093988d3927176a372281e8
+NODE_VERSION="v20.12.2"
+NODE_SHA256=f8f9b6877778ed2d5f920a5bd853f0f8a8be1c42f6d448c763a95625cbbb4b0d
 NODE_FILENAME="node-${NODE_VERSION}-linux-x64"
-NODE_TAR_FILENAME="${NODE_FILENAME}.tar.xz"
+NODE_TAR_FILENAME="${NODE_FILENAME}.tar.gz"
 NODE_EXTRACT_DIR="${NODE_FILENAME}"
 NODE_DOWNLOAD_URL="https://nodejs.org/dist/${NODE_VERSION}/${NODE_TAR_FILENAME}"
 DOWNLOAD_CACHE_DIR="/vagrant/provisioning/downloads"
@@ -16,11 +16,6 @@ SU_CMD="su vagrant -c"
 function install_nodejs
 {
     # https://github.com/nodejs/help/wiki/Installation
-    NODE_FILENAME="node-${NODE_VERSION}-linux-x64"
-    NODE_TAR_FILENAME="${NODE_FILENAME}.tar.xz"
-    NODE_EXTRACT_DIR="${NODE_FILENAME}"
-    NODE_DOWNLOAD_URL="https://nodejs.org/dist/${NODE_VERSION}/${NODE_TAR_FILENAME}"
-
     if [ ! -x "/usr/local/lib/nodejs/${NODE_EXTRACT_DIR}/bin/node" ]; then
 	# Download the tarball distribution if it does not already exist
 	if [ ! -e "${DOWNLOAD_CACHE_DIR}/${NODE_TAR_FILENAME}" ]; then
@@ -38,7 +33,7 @@ function install_nodejs
 	    if [ ! -d /usr/local/lib/nodejs ]; then
 		mkdir -p /usr/local/lib/nodejs
 	    fi
-	    tar --no-same-owner --no-same-permissions --xz \
+	    tar --no-same-owner --no-same-permissions --gunzip \
 		-xf "${DOWNLOAD_CACHE_DIR}/${NODE_TAR_FILENAME}" \
 		-C /usr/local/lib/nodejs
 	    if [ -L /usr/local/lib/nodejs/node-current ]; then
