@@ -15,7 +15,7 @@
     "preview": "vite preview",
     "lint": "eslint *.js",
     "clean": "rimraf dist",
-    "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist/LICENSES.txt",
+    "pre-dist": "license-checker-rseidelsohn --production --excludePackages convert-coord --nopeer --plainVertical --out ./dist/LICENSES.txt && cp node_modules/bootstrap/dist/css/bootstrap.min.css.map dist/assets/",
     "pre-dist-yarn": "node -e \"const fs = require('fs'); if ('$npm_execpath'.indexOf('yarn.js') !== -1) { const cp=require('child_process'); const stdout=cp.execSync('yarn licenses generate-disclaimer', {env: { ...process.env, NODE_ENV: 'production'}, encoding: 'utf8'}); fs.writeFileSync('dist/LICENSES.txt', stdout); } \"",
     "update-version": "node -e \"const pkg=require('./package.json'); require('shelljs').sed('-i', /Coordinate converter: v<span>([-rc.\\d]+)<\\/span>/, 'Coordinate converter: v<span>' + pkg.version + '<\\/span>', './index.html');\"",
     "build-release": "$npm_execpath run update-version && $npm_execpath run clean && $npm_execpath run build && $npm_execpath run pre-dist && $npm_execpath run tar-release && $npm_execpath run zip-release",
