@@ -116,27 +116,31 @@ Apache or Nginx.
 
 ## Building Docker Image for Release
 
-1.  Rebuild the image with:
+1.  Rebuild the images with:
 
-		$ podman compose up -d --build --no-cache --force-recreate
+		$ mv package-lock.json package-lock.json~
+		$ docker build --platform=linux/amd64 -t fdean/convert-coord:latest-amd64 .
+		$ mv package-lock.json~ package-lock.json
+		$ docker build --platform=linux/arm64 -t fdean/convert-coord:latest-arm64 .
 
-	or:
+2.  Optionally start the container and browse to <http://localhost:8090/> to
+    view the running application.
 
-		$ docker build --no-cache -t fdean/convert-coord .
 		$ docker compose up -d
-
-2.  Optionally browse to <http://localhost:8090/> to view the running
-    application.
 
 3.  Stop the running container with:
 
 		$ docker compose down
 
-4.  Tag the release:
+4.  Push the releases:
+
+		$ docker push fdean/convert-coord:latest-amd64
+		$ docker push fdean/convert-coord:latest-arm64
+		$ docker manifest create fdean/convert-coord:latest \
+		fdean/convert-coord:latest-amd64 fdean/convert-coord:latest-arm64
+		$ docker push fdean/convert-coord:latest
+
+5.  Tag and push the versioned release:
 
 		$ docker tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
-
-5.  Push the release:
-
 		$ docker push fdean/convert-coord:$VERSION
-		$ docker push fdean/convert-coord:latest
