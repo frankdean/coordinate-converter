@@ -9,18 +9,9 @@ then
     cd /convert-coord
     npm install
     npm run build-release
-    npm run build
     cd "$DIR"
 fi
 
-if [ ! -d /var/www/html/convert-coord ]; then
-    mkdir /var/www/html/convert-coord
-fi
-if [ -d /convert-coord/dist-prod ]; then
-    cp -a /convert-coord/dist-prod/* /var/www/html/convert-coord
-fi
-if [ -d /convert-coord/dist ]; then
-    cp -a /convert-coord/dist/* /var/www/html
-fi
+sed -i 's~root /var/www/html~root /convert-coord/dist~' /etc/nginx/sites-available/default
 
 exec "$@"

@@ -39,7 +39,13 @@ The application can be run in the [Play-with-docker][play] environment.
 
 ## Building
 
-The application is built using [Vite](https://vitejs.dev/).
+The application can be built using either [Vite][] or [Rollup][].  [Rollup][]
+provides a simple build solution.  [Vite][] uses [Rollup][] under the hood,
+simplifies the development process and the build supports
+[cache-busting](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#cache_busting).
+
+[Vite]: https://vitejs.dev/ "Next Generation Frontend Tooling"
+[Rollup]: https://rollupjs.org "The JavaScript module bundler"
 
 The following commands are executed in the root of the project directory.
 
@@ -48,57 +54,63 @@ Install the required packages:
 	$ npm install
 	$ yarn
 
-Run the application for development:
+Run the application using [Vite][]for development:
 
 	$ npm run dev
 	$ yarn dev
 
-Build release files:
-
-	$ npm run build
-	$ yarn build
-
-The object files are created under `./dist`.
-
-Preview using the files under `./dist`:
-
-	$ npm run preview
-	$ yarn preview
-
-The files built under `dist` can be deployed using a static web-server such as
-Apache or Nginx.
-
 ### Creating a Release with Docker/Podman
+
+This builds the release using [Rollup][].
 
 1.  Build the release:
 
 		$ docker compose -f docker-compose-dev.yaml up -d --build
 
-	When running `podman`, if you get errors like `Error: statfs
-    .../convert-coord: no such file or directory`, try restarting the Podman
-    machine.
-
 2.  Monitor the build:
 
 		$ docker logs -f convert-coord_web_1
 
-	Navigate to <http://localhost:8090/> to view the application.
+	Nginx is configured with `dist` as it's root directory.  Navigate to
+    <http://localhost:8090/> to view the application.
 
 3.  The distribution files are created in the project's root directory on the
     host.
 
 		$ ls convert-coord-release-*
 
-4.  Re-build the release:
+	The files built under `dist` can be deployed using a static web-server
+	such as Apache or Nginx.
+
+4.  Re-build the release (using [Rollup][]):
 
 		$ docker exec -it convert-coord_web_1 bash
-		$ cd /convert-coord
-		$ npm run build-release
+		$ npm run rollup-build-release
 
-5.  To develop using Vite:
+5.  Build the release using [Vite][]:
+
+		$ npm run vite-build-release
+
+	The [Vite][] files created under `dist` can be previewed with:
+
+		$ npm run preview -- --host
+
+	Navigate to <http://localhost:8081/> to view the application preview.
+
+6.  To develop using [Rollup][]:
 
 		$ docker exec -it convert-coord_web_1 bash
-		$ cd /convert-coord
+		$ npm run lint
+		$ npm audit
+		$ npm outdated
+		$ npm run rollup-build
+
+After making any edits to the application, re-run the build and refresh the
+browser page at <http://localhost:8090/>.
+
+7.  To develop using Vite:
+
+		$ docker exec -it convert-coord_web_1 bash
 		$ npm run lint
 		$ npm audit
 		$ npm outdated
@@ -109,12 +121,12 @@ Apache or Nginx.
 	If changes to the code are not recognised, press the `r` key to restart
     the Vite server.
 
-6.  To stop the container, optionally including the `-v` switch to remove the
+8.  To stop the container, optionally including the `-v` switch to remove the
     volume used to hold the required npm packages:
 
 		$ docker compose -f docker-compose-dev.yaml down -v
 
-## Building Docker Image for Release
+## Building Docker Images for Release
 
 1.  Rebuild the images with:
 
