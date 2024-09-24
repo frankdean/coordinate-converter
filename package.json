@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Geographical Coordinate Converter",
   "repository": "git://www.fdsd.co.uk/coordinate-converter.git",
   "author": "Frank Dean",
@@ -30,14 +30,14 @@
     "zip-release": "node -e \"const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip'); require('shelljs').chmod('go-w', '${npm_package_name}-release-v${npm_package_version}.zip');\""
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "adm-zip": "^0.5.10",
     "eslint": "^9.10.0",
     "license-checker-rseidelsohn": "^4.2.10",
-    "rimraf": "^5.0.0",
-    "rollup": "^4.14.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.22.4",
     "shelljs": "^0.8.5",
     "tar": "^7.4.3",
     "vite": "^5.2.14"
