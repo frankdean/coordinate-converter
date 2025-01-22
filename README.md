@@ -148,6 +148,7 @@ browser page at <http://localhost:8090/>.
 
 		$ docker push fdean/convert-coord:latest-amd64
 		$ docker push fdean/convert-coord:latest-arm64
+		$ docker image rm localhost/fdean/convert-coord:latest
 		$ docker manifest create fdean/convert-coord:latest \
 		fdean/convert-coord:latest-amd64 fdean/convert-coord:latest-arm64
 		$ docker push fdean/convert-coord:latest
