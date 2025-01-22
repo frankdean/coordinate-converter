@@ -1,6 +1,6 @@
 {
   "name": "convert-coord",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Geographical Coordinate Converter",
   "repository": "git://www.fdsd.co.uk/coordinate-converter.git",
   "author": "Frank Dean",
@@ -40,7 +40,7 @@
     "rollup": "^4.22.4",
     "shelljs": "^0.8.5",
     "tar": "^7.4.3",
-    "vite": "^5.2.14"
+    "vite": "^5.4.7"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",
