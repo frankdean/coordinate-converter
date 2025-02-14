@@ -44,7 +44,7 @@ provides a simple build solution.  [Vite][] uses [Rollup][] under the hood,
 simplifies the development process and the build supports
 [cache-busting](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#cache_busting).
 
-[Vite]: https://vitejs.dev/ "Next Generation Frontend Tooling"
+[Vite]: https://vite.dev/ "Next Generation Frontend Tooling"
 [Rollup]: https://rollupjs.org "The JavaScript module bundler"
 
 The following commands are executed in the root of the project directory.
