@@ -4,7 +4,7 @@
   "description": "Geographical Coordinate Converter",
   "repository": "git://www.fdsd.co.uk/coordinate-converter.git",
   "author": "Frank Dean",
-  "license": "GPL-3.0-or-later",
+  "license": "AGPL-3.0-or-later",
   "private": true,
   "type": "module",
   "scripts": {
