@@ -61,6 +61,12 @@ Run the application using [Vite][]for development:
 
 ### Creating a Release with Docker/Podman
 
+The release contains only those artifacts that are required to deploy the
+application.  A new release is only needed if there is a change to any of the
+non-dev dependencies, which can be listed with:
+
+	$ npm ls --all --omit dev
+
 This builds the release using [Rollup][].
 
 1.  Build the release:
