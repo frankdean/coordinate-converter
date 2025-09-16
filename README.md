@@ -67,7 +67,7 @@ non-dev dependencies, which can be listed with:
 
 	$ npm ls --all --omit dev
 
-This builds the release using [Rollup][].
+This builds the release using [Vite][].
 
 1.  Build the release:
 
