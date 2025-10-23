@@ -13,7 +13,7 @@ services:
       - 8090:80
     volumes:
       - type: bind
-        source: ./
+        source: .
         target: /convert-coord
       - type: volume
         source: web_node_modules

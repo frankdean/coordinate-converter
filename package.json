@@ -30,7 +30,7 @@
     "zip-release": "node -e \"const Zip=require('adm-zip');const zip=new Zip();zip.addLocalFolder('dist','.');zip.writeZip('${npm_package_name}-release-v${npm_package_version}.zip'); require('shelljs').chmod('go-w', '${npm_package_name}-release-v${npm_package_version}.zip');\""
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^28.0.0",
+    "@rollup/plugin-commonjs": "28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "adm-zip": "^0.5.10",

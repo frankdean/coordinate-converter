@@ -29,7 +29,7 @@ The application can be run in the [Play-with-docker][play] environment.
 
 1.  Run the container with:
 
-		$ docker container run --publish 8080:80 --name cc -d fdean/convert-coord
+		$ docker container run --publish 8080:80 --name cc -d docker.io/fdean/convert-coord
 
 1.  Once the application is running a link titled `8080` will be shown next to
     the `OPEN PORT` button at the top of the page.  Click on the `8080` link
@@ -69,9 +69,22 @@ non-dev dependencies, which can be listed with:
 
 This builds the release using [Vite][].
 
-1.  Build the release:
+1.  Build and run the release:
+
+	Either using docker compose:
 
 		$ docker compose -f docker-compose-dev.yaml up -d --build
+
+	or manually:
+
+		$ docker build -f Dockerfile-dev -t convert-coord-dev .
+		$ docker volume create web_node_modules
+		$ docker run --publish 8080:5173 \
+		--publish 8081:4173 --publish 8090:80 \
+		-v .:/convert-coord \
+		-v web_node_modules:/convert-coord/node_modules \
+		--name convert-coord_web_1 \
+		-d convert-coord-dev
 
 2.  Monitor the build:
 
@@ -130,7 +143,13 @@ browser page at <http://localhost:8090/>.
 8.  To stop the container, optionally including the `-v` switch to remove the
     volume used to hold the required npm packages:
 
+	If using docker compose:
+
 		$ docker compose -f docker-compose-dev.yaml down -v
+
+	Otherwise:
+
+		$ docker container rm -f convert-coord_web_1
 
 ## Building Docker Images for Release
 
@@ -163,3 +182,24 @@ browser page at <http://localhost:8090/>.
 
 		$ docker tag fdean/convert-coord:latest fdean/convert-coord:$VERSION
 		$ docker push fdean/convert-coord:$VERSION
+
+## Issues
+
+### Fails to build amd64 images on arm64 with Fedora 42
+
+MacPorts podman 5.6.1_0
+
+Fedora 41 and 42 use versions of QEMU 9. on which the [Go garbage collector
+crashes](https://gitlab.com/qemu-project/qemu/-/issues/2560).
+
+Fedora 40.20241006.3.0 is OK.  Create the machine with:
+
+	$ podman machine init fedora40 --image \
+	$ https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/40.20241006.3.0/aarch64/fedora-coreos-40.20241006.3.0-applehv.aarch64.raw.gz
+	$ export CONTAINER_CONNECTION=fedora40
+
+Also Fedora 39 is OK.  Create the machine with:
+
+	$ podman machine init fedora39 --image \
+	$ https://builds.coreos.fedoraproject.org/prod/streams/stable/builds/39.20240407.3.0/aarch64/fedora-coreos-39.20240407.3.0-applehv.aarch64.raw.gz
+	$ export CONTAINER_CONNECTION=fedora39
