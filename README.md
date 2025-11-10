@@ -151,6 +151,28 @@ browser page at <http://localhost:8090/>.
 
 		$ docker container rm -f convert-coord_web_1
 
+### Using Lima for Development
+
+The application can be previewed and developed within a [Lima][] based
+environment.
+
+[Lima]: https://lima-vm.io "Linux virtual machines, with a focus on running containers"
+
+	$ limactl create convert-coord.yaml
+	$ limactl start convert-coord
+	$ limactl shell convert-coord
+	$ cd ~/convert-coord
+
+Thereafter use `npm` commands as described in the section above.
+
+To stop the container:
+
+	$ limactl stop convert-coord
+
+To delete the container:
+
+	$ limactl delete convert-coord
+
 ## Building Docker Images for Release
 
 1.  Rebuild the images with:
@@ -185,7 +207,7 @@ browser page at <http://localhost:8090/>.
 
 ## Issues
 
-### Fails to build amd64 images on arm64 with Fedora 42
+### Fails to build amd64 Docker images on arm64 with Fedora 42
 
 MacPorts podman 5.6.1_0
 

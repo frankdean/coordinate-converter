@@ -8,6 +8,7 @@ COORD_SOURCE=${COORD_SOURCE:-/vagrant}
 # The user and group name for building Trip Server
 USERNAME=${USERNAME:-vagrant}
 GROUPNAME=${GROUPNAME:-${USERNAME}}
+USERHOME=${USERHOME:-"/home/${USERNAME}"}
 PROCESSOR="$(uname -p)"
 ARCH="$(arch)"
 echo $ARCH
@@ -68,9 +69,9 @@ function install_nodejs
 	    fi
 	fi
     fi
-    egrep '^export\s+PATH.*nodejs' /home/${USERNAME}/.profile >/dev/null 2>&1
+    egrep '^export\s+PATH.*nodejs' ${USERHOME}/.profile >/dev/null 2>&1
     if [ $? -ne 0 ]; then
-	echo "export PATH=/usr/local/lib/nodejs/node-current/bin:$PATH" >>/home/${USERNAME}/.profile
+	echo "export PATH=/usr/local/lib/nodejs/node-current/bin:$PATH" >>${USERHOME}/.profile
     fi
     # if [ -x /usr/local/lib/nodejs/node-current/bin/node ] && \
     # 	   [ ! -x /usr/local/lib/nodejs/node-current/lib/node_modules/yarn/bin/yarn ]; then

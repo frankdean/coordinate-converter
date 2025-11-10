@@ -8,6 +8,7 @@ COORD_SOURCE=${COORD_SOURCE:-/vagrant}
 # The user and group name for building Trip Server
 USERNAME=${USERNAME:-vagrant}
 GROUPNAME=${GROUPNAME:-${USERNAME}}
+USERHOME=${USERHOME:-"/home/${USERNAME}"}
 
 function setup_nginx
 {
@@ -16,7 +17,7 @@ function setup_nginx
 	if [ "$USERNAME" != "vagrant" ]; then
 	    grep -E '^\s+root /vagrant/dist;' /etc/nginx/sites-available/convert-coords
 	    if [ $? -eq 0 ]; then
-		sed -i "s~/vagrant/dist~/home/${USERNAME}/Projects/convert-coord/dist~" /etc/nginx/sites-available/convert-coords
+		sed -i "s~/vagrant/dist~${USERHOME}/convert-coord/dist~" /etc/nginx/sites-available/convert-coords
 	    fi
 	fi
 	if [ -e /etc/nginx/sites-enabled/default ]; then
@@ -30,11 +31,11 @@ function setup_nginx
 setup_nginx
 su - ${USERNAME} -c "cd ${COORD_SOURCE} && npm install"
 
-if [ ! -f /home/${USERNAME}/dist/index.html ]; then
+if [ ! -f ${USERHOME}/dist/index.html ]; then
     su - ${USERNAME} -c "cd ${COORD_SOURCE} && npm run build"
 fi
 
-egrep '^export\s+EDITOR' /home/${USERNAME}/.profile >/dev/null 2>&1
+egrep '^export\s+EDITOR' ${USERHOME}/.profile >/dev/null 2>&1
 if [ $? -ne 0 ]; then
-	echo "export EDITOR=/usr/bin/vi" >>/home/${USERNAME}/.profile
+	echo "export EDITOR=/usr/bin/vi" >>${USERHOME}/.profile
 fi
