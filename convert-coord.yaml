@@ -19,10 +19,10 @@ mountType: "virtiofs"
 mounts:
   - location: "."
     mountPoint: "{{.Home}}/convert-coord"
-    writable: false
-  - location: "./node_modules"
-    mountPoint: "{{.Home}}/convert-coord/node_modules"
     writable: true
+  # - location: "./node_modules"
+  #   mountPoint: "{{.Home}}/convert-coord/node_modules"
+  #   writable: true
 user:
   name: "lima"
   home: "/home/{{.User}}"
